@@ -2,7 +2,7 @@ import React from "react";
 
 import "./ExpenseItem.css";
 import ExpenseDate from "./ExpenseDate";
-import Card from "./Card";
+import Card from "../UI/Card";
 
 // className instead of class, because this gets compiled down to javascript
 function ExpenseItem(props) {
