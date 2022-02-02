@@ -7,7 +7,9 @@ import Card from "../UI/Card";
 // className instead of class, because this gets compiled down to javascript
 const ExpenseItem = (props) => {
   // function clickHandler()
+  // State is per component instance
   const [title, setTitle] = useState(props.title);
+  console.log("ExpenseItem evaluated by React");
 
   // End event listeners with Handler
   const clickHandler = () => {
