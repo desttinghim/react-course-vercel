@@ -26,15 +26,13 @@ export const Button = (props) => {
 
 export const Modal = (props) => {
   return (
-    <div className={modalStyle.backdrop}>
+    <div className={modalStyle.backdrop} onClick={props.onOkay}>
       <Card className={modalStyle.modal}>
         <header className={modalStyle.header}>
           <h2>{props.title}</h2>
         </header>
 
-        <div className={modalStyle.content}>
-          <p>{props.message}</p>
-        </div>
+        <div className={modalStyle.content}>{props.message}</div>
 
         <footer className={modalStyle.actions}>
           <Button onClick={props.onOkay}>Okay</Button>

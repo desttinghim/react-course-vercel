@@ -30,7 +30,7 @@ const UserList = (props) => {
 };
 
 function App() {
-  const [users, setUsers] = useState([{ username: "hello", age: 1000 }]);
+  const [users, setUsers] = useState([]);
   const [showInputModal, setShowInputModal] = useState("");
 
   const newUserHandler = (newUser) => {
@@ -38,7 +38,7 @@ function App() {
   };
 
   const inputErrorHandler = (errors) => {
-    setShowInputModal(errors.map((error) => <p>{error}</p>));
+    setShowInputModal(errors.map((error, i) => <p key={i}>{error}</p>));
   };
 
   const onModalOkayHandler = () => {
