@@ -1,23 +1,30 @@
 import React, { useState } from "react";
-import "./App.css";
 
 import NewUser from "./NewUser";
 import { Card, Modal } from "./UI";
 
+import UserListStyle from "./UserList.module.css";
+
 const User = (props) => {
   return (
-    <p>
-      {props.username} ({props.age} years old)
-    </p>
+    <div>
+      <p>
+        {props.username} ({props.age} years old)
+      </p>
+    </div>
   );
 };
 
 const UserList = (props) => {
   return (
-    <Card>
-      {props.items.map((user) => (
-        <User key={user.username} username={user.username} age={user.age} />
-      ))}
+    <Card className={UserListStyle.users}>
+      <ul>
+        {props.items.map((user) => (
+          <li>
+            <User key={user.username} username={user.username} age={user.age} />
+          </li>
+        ))}
+      </ul>
     </Card>
   );
 };

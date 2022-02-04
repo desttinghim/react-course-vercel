@@ -19,13 +19,12 @@ const NewUser = (props) => {
     const errors = [];
     if (enteredUsername.trim().length === 0) errors.push("Empty Username");
     if (enteredAge.trim().length === 0) errors.push("Empty Age");
-    const age = Number(enteredAge);
-    if (age <= 0) errors.push("Age must be a positive value");
+    if (+enteredAge < 1) errors.push("Age must be a positive value");
 
     if (errors.length > 0) {
       props.onInputError(errors);
     } else {
-      props.onNewUser({ username: enteredUsername, age });
+      props.onNewUser({ username: enteredUsername, age: +enteredAge });
 
       setEnteredUsername("");
       setEnteredAge("");
