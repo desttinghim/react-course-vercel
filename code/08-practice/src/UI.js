@@ -1,5 +1,8 @@
 import React from "react";
 
+import cardStyle from "./Card.module.css";
+import buttonStyle from "./Button.module.css";
+
 export const Modal = (props) => {
   return (
     <Card>
@@ -11,6 +14,21 @@ export const Modal = (props) => {
 };
 
 export const Card = (props) => {
-  const classes = "card " + props.className;
-  return <div className={classes}>{props.children}</div>;
+  return (
+    <div className={`${cardStyle.card} ${props.className}`}>
+      {props.children}
+    </div>
+  );
+};
+
+export const Button = (props) => {
+  return (
+    <button
+      className={buttonStyle.button}
+      type={props.type ?? "button"}
+      onClick={props.onClick}
+    >
+      {props.children}
+    </button>
+  );
 };
