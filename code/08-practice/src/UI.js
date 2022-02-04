@@ -2,16 +2,7 @@ import React from "react";
 
 import cardStyle from "./Card.module.css";
 import buttonStyle from "./Button.module.css";
-
-export const Modal = (props) => {
-  return (
-    <Card>
-      <h2>{props.title}</h2>
-      <p>{props.message}</p>
-      <button onClick={props.onOkay}>Okay</button>
-    </Card>
-  );
-};
+import modalStyle from "./Modal.module.css";
 
 export const Card = (props) => {
   return (
@@ -30,5 +21,25 @@ export const Button = (props) => {
     >
       {props.children}
     </button>
+  );
+};
+
+export const Modal = (props) => {
+  return (
+    <div className={modalStyle.backdrop}>
+      <Card className={modalStyle.modal}>
+        <header className={modalStyle.header}>
+          <h2>{props.title}</h2>
+        </header>
+
+        <div className={modalStyle.content}>
+          <p>{props.message}</p>
+        </div>
+
+        <footer className={modalStyle.actions}>
+          <Button onClick={props.onOkay}>Okay</Button>
+        </footer>
+      </Card>
+    </div>
   );
 };
