@@ -14,6 +14,8 @@ const AddUser = (props) => {
 
   const addUserHandler = (event) => {
     event.preventDefault();
+    // Using Refs here makes the component and
+    // uncontrolled component.
     const enteredName = nameInputRef.current.value;
     const enteredAge = ageInputRef.current.value;
     if (enteredName.trim().length === 0 || enteredAge.trim().length === 0) {
