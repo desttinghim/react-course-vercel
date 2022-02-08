@@ -9,7 +9,7 @@ const defaultCartState = {
 
 const cartReducer = (state, action) => {
   switch (action.type) {
-    case "ADD":
+    case "ADD": {
       const updatedTotalAmount =
         state.totalAmount + action.item.price * action.item.amount;
 
@@ -33,9 +33,26 @@ const cartReducer = (state, action) => {
         items: updatedItems,
         totalAmount: updatedTotalAmount,
       };
-    // break;
-    case "REMOVE":
-      break;
+    }
+    case "REMOVE": {
+      const itemIndex = state.items.findIndex((item) => item.id === action.id);
+      let updatedItems = [...state.items];
+
+      let item = updatedItems[itemIndex];
+      item.amount -= 1;
+      if (item.amount === 0) {
+        updatedItems.splice(itemIndex, 1);
+      } else {
+        updatedItems[itemIndex] = item;
+      }
+
+      const updatedTotalAmount = state.totalAmount - item.price;
+
+      return {
+        items: updatedItems,
+        totalAmount: updatedTotalAmount,
+      };
+    }
     default:
       console.error(`No such action ${action.type}`);
       break;
