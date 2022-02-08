@@ -1,2 +1,2 @@
-((nil . ((projectile-other-file-alist . (("js" . ("module.css"))
-                                          ("module.css" . ("js")))))))
+;; ((nil . ((projectile-other-file-alist . (("js" . ("module.css"))
+;;                                           ("module.css" . ("js")))))))
