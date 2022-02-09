@@ -9,9 +9,10 @@ const SimpleInput = (props) => {
 
   const enteredNameIsValid = enteredName.trim() !== "";
   const nameInputIsInvalid = !enteredNameIsValid && enteredNameTouched;
-  const enteredEmailIsValid =
-    enteredEmail.trim() !== "" && enteredEmail.includes("@");
+
+  const enteredEmailIsValid = enteredEmail.includes("@");
   const emailInputIsInvalid = !enteredEmailIsValid && enteredEmailTouched;
+
   const formIsValid = enteredNameIsValid && enteredEmailIsValid;
 
   const nameInputChangeHandler = (event) => {
@@ -42,8 +43,9 @@ const SimpleInput = (props) => {
     console.log(enteredName, enteredEmail);
 
     setEnteredName("");
-    setEnteredEmail("");
     setEnteredNameTouched(false);
+
+    setEnteredEmail("");
     setEnteredEmailTouched(false);
   };
 
@@ -66,18 +68,22 @@ const SimpleInput = (props) => {
           onBlur={nameInputBlurHandler}
           value={enteredName}
         />
-        {nameInputIsInvalid && <p>Name must not be empty.</p>}
+        {nameInputIsInvalid && (
+          <p className="error-text">Name must not be empty.</p>
+        )}
       </div>
       <div className={emailInputClasses}>
-        <label htmlFor="email">Email</label>
+        <label htmlFor="email">Your E-Mail</label>
         <input
-          type="text"
+          type="email"
           id="email"
           onChange={emailInputChangeHandler}
           onBlur={emailInputBlurHandler}
           value={enteredEmail}
         />
-        {emailInputIsInvalid && <p>Email must not be empty and contain a @.</p>}
+        {emailInputIsInvalid && (
+          <p className="error-text">Email must not be empty and contain a @.</p>
+        )}
       </div>
       <div className="form-actions">
         <button disabled={!formIsValid}>Submit</button>
