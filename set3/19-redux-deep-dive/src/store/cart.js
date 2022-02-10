@@ -13,8 +13,8 @@ const cartItem = {
 
 const initialState = {
   items: [],
-  total: 0,
-  visible: true,
+  totalQuantity: 0,
+  totalAmount: 0,
 };
 
 const cartSlice = createSlice({
@@ -22,39 +22,36 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     add(state, action) {
-      state.total += action.payload.price;
-      const index = state.items.findIndex(
-        (item) => item.id === action.payload.id
-      );
-      if (index === -1) {
+      const newItem = action.payload;
+      state.totalAmount += newItem.price;
+      state.totalQuantity += 1;
+      const item = state.items.find((item) => item.id === newItem.id);
+      if (!item) {
         state.items.push({
-          ...action.payload,
+          ...newItem,
           quantity: 1,
           total: action.payload.price,
         });
         return;
       }
-      state.items[index].quantity += 1;
-      state.items[index].total += action.payload.price;
+      item.quantity += 1;
+      item.total += action.payload.price;
     },
     remove(state, action) {
-      state.total -= action.payload.price;
-      const index = state.items.findIndex(
-        (item) => item.id === action.payload.id
-      );
-      if (index === -1) {
-        console.error("This item is not in the cart, why is it being removed?");
+      const id = action.payload;
+      const existingItem = state.items.find((item) => item.id === id);
+      state.totalAmount -= existingItem.price;
+      state.totalQuantity -= 1;
+      if (existingItem.quantity === 1) {
+        state.items = state.items.filter((item) => item.id !== id);
+      } else {
+        existingItem.total -= existingItem.price;
+        existingItem.quantity -= 1;
       }
-      state.items[index].quantity -= 1;
-      state.items[index].total -= action.payload.price;
-      state.items = state.items.filter((item) => item.quantity > 0);
     },
     clear(state) {
       state.items = [];
       state.total = 0;
-    },
-    toggle(state) {
-      state.visible = !state.visible;
     },
   },
 });

@@ -3,9 +3,15 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = [
   {
     id: "p1",
-    title: "Test",
+    title: "My First Book",
     price: 6,
-    description: "This is a first product - amazing!",
+    description: "The first book I ever wrote",
+  },
+  {
+    id: "p2",
+    title: "My Second Book",
+    price: 5,
+    description: "The second book I ever wrote",
   },
 ];
 
