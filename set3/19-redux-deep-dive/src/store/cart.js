@@ -14,6 +14,7 @@ const cartItem = {
 const initialState = {
   items: [],
   total: 0,
+  visible: true,
 };
 
 const cartSlice = createSlice({
@@ -51,6 +52,9 @@ const cartSlice = createSlice({
     clear(state) {
       state.items = [];
       state.total = 0;
+    },
+    toggle(state) {
+      state.visible = !state.visible;
     },
   },
 });
