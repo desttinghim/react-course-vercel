@@ -40,8 +40,12 @@ const AvailableMeals = () => {
     <section className={classes.meals}>
       <Card>
         {!mealRequest.error && !mealRequest.isLoading && <ul>{mealsList}</ul>}
-        {mealRequest.isLoading && <p>Loading...</p>}
-        {mealRequest.error && <p>{mealRequest.error}</p>}
+        {mealRequest.isLoading && (
+          <p className={classes["meals-loading"]}>Loading...</p>
+        )}
+        {mealRequest.error && (
+          <p className={classes["meals-error"]}>{mealRequest.error}</p>
+        )}
       </Card>
     </section>
   );
