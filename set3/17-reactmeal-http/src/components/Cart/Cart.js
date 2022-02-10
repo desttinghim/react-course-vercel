@@ -62,8 +62,8 @@ const Cart = (props) => {
         },
       },
       (data) => {
-        console.log(data);
         setDidSubmit(true);
+        cartCtx.clearCart();
       }
     );
   };
