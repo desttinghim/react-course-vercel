@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 
 import Modal from "../UI/Modal";
 import CartItem from "./CartItem";
@@ -10,22 +10,9 @@ import useHttp from "../../hooks/use-http";
 
 const Cart = (props) => {
   const [isCheckout, setIsCheckout] = useState(false);
-  // const orderRequest = useHttp();
-  // const sendOrderRequest = orderRequest.sendRequest;
+  const [didSubmit, setDidSubmit] = useState(false);
 
-  // useEffect(() => {
-  //   const transformOrder = {};
-
-  //   sendOrderRequest(
-  //     {
-  //       url: "https://react-http-3d4aa-default-rtdb.firebaseio.com/orders.json",
-  //       method: 'POST',
-  //       body: ,
-  //       headers:
-  //     },
-
-  //   );
-  // }, [sendOrderRequest]);
+  const order = useHttp();
 
   const cartCtx = useContext(CartContext);
 
@@ -63,7 +50,25 @@ const Cart = (props) => {
     </ul>
   );
 
-  const modalActions = !isCheckout && (
+  const submitOrderHandler = (userData) => {
+    console.log(userData);
+    order.sendRequest(
+      {
+        url: "https:react-http-3d4aa-default-rtdb.firebaseio.com/orders.json",
+        method: "POST",
+        body: {
+          user: userData,
+          orderedItems: cartCtx.items,
+        },
+      },
+      (data) => {
+        console.log(data);
+        setDidSubmit(true);
+      }
+    );
+  };
+
+  const modalActions = (
     <div className={classes.actions}>
       <button className={classes["button--alt"]} onClick={props.onClose}>
         Close
@@ -76,15 +81,43 @@ const Cart = (props) => {
     </div>
   );
 
-  return (
-    <Modal onClose={props.onClose}>
+  const cartModalContent = (
+    <React.Fragment>
       {cartItems}
       <div className={classes.total}>
         <span>Total Amount</span>
         <span>{totalAmount}</span>
       </div>
-      {isCheckout && <Checkout onCancel={cancelOrderHandler} />}
-      {modalActions}
+      {isCheckout && (
+        <Checkout
+          onCancel={cancelOrderHandler}
+          onConfirm={submitOrderHandler}
+        />
+      )}
+      {!isCheckout && modalActions}
+    </React.Fragment>
+  );
+
+  const isSubmittingModalContent = <p>Sending order data...</p>;
+
+  const didSubmitModalContent = (
+    <React.Fragment>
+      <p>Successfully sent the order!</p>
+
+      <div className={classes.actions}>
+        <button className={classes["button--alt"]} onClick={props.onClose}>
+          Close
+        </button>
+      </div>
+    </React.Fragment>
+  );
+
+  return (
+    <Modal onClose={props.onClose}>
+      {!didSubmit && !order.isLoading && !order.error && cartModalContent}
+      {order.isLoading && isSubmittingModalContent}
+      {didSubmit && !order.hasError && didSubmitModalContent}
+      {order.error && <p>{order.error}</p>}
     </Modal>
   );
 };

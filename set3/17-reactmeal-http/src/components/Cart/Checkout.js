@@ -10,7 +10,7 @@ const Checkout = (props) => {
     name: true,
     street: true,
     city: true,
-    postalCode: true,
+    postal: true,
   });
 
   const nameInputRef = useRef();
@@ -21,46 +21,71 @@ const Checkout = (props) => {
   const confirmHandler = (event) => {
     event.preventDefault();
 
-    const nameValid = isEmpty(nameInputRef.current.value);
-    const streetValid = isEmpty(streetInputRef.current.value);
-    const postalValid = !isFiveChars(postalInputRef.current.value);
-    const cityValid = isEmpty(cityInputRef.current.value);
+    const nameValid = !isEmpty(nameInputRef.current.value);
+    const streetValid = !isEmpty(streetInputRef.current.value);
+    const postalValid = isFiveChars(postalInputRef.current.value);
+    const cityValid = !isEmpty(cityInputRef.current.value);
+
+    setFormInputsValidity({
+      name: nameValid,
+      street: streetValid,
+      postal: postalValid,
+      city: cityValid,
+    });
 
     const formIsValid = nameValid && streetValid && postalValid && cityValid;
 
     if (!formIsValid) {
-      setFormInputsValidity({
-        name: nameValid,
-        street: streetValid,
-        postal: postalValid,
-        city: cityValid,
-      });
       return;
     }
 
-    nameInputRef.current.value = "";
-    streetInputRef.current.value = "";
-    postalInputRef.current.value = "";
-    cityInputRef.current.value = "";
+    props.onConfirm({
+      name: nameInputRef.current.value,
+      street: streetInputRef.current.value,
+      postal: postalInputRef.current.value,
+      city: cityInputRef.current.value,
+    });
   };
 
   return (
     <form className={classes.form} onSubmit={confirmHandler}>
-      <div className={classes.control}>
+      <div
+        className={`${classes.control} ${
+          formInputsValidity.name ? "" : classes.invalid
+        }`}
+      >
         <label htmlFor="name">Your Name</label>
         <input ref={nameInputRef} id="name" type="text" />
+        {!formInputsValidity.name && <p>Please enter a valid name!</p>}
       </div>
-      <div className={classes.control}>
+      <div
+        className={`${classes.control} ${
+          formInputsValidity.street ? "" : classes.invalid
+        }`}
+      >
         <label htmlFor="street">Street</label>
         <input ref={streetInputRef} id="street" type="text" />
+        {!formInputsValidity.street && <p>Please enter a valid street!</p>}
       </div>
-      <div className={classes.control}>
+      <div
+        className={`${classes.control} ${
+          formInputsValidity.postal ? "" : classes.invalid
+        }`}
+      >
         <label htmlFor="postal">Postal Code</label>
         <input ref={postalInputRef} id="postal" type="text" />
+        {!formInputsValidity.postal && (
+          <p>Please enter a valid postal code (5 characters)!</p>
+        )}
       </div>
-      <div className={classes.control}>
+      <div
+        className={`${classes.control} ${
+          formInputsValidity.city ? "" : classes.invalid
+        }`}
+      >
         <label htmlFor="city">City</label>
         <input ref={cityInputRef} id="city" type="text" />
+        {!formInputsValidity.city && <p>Please enter a valid city!</p>}
       </div>
       <div className={classes.actions}>
         <button type="button" onClick={props.onCancel}>
