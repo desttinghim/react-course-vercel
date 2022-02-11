@@ -10,7 +10,7 @@ const QuoteDetail = () => {
     <Fragment>
       <h1>Quote Detail</h1>
       <p> {params.quoteId} </p>
-      <Route path="/quotes/:quoteId/comments">
+      <Route path={`/quotes/${params.quoteId}/comments`}>
         <Comments />
       </Route>
     </Fragment>
