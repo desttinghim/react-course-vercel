@@ -1,7 +1,0 @@
-  /home/desttinghim/repos/react-projects-desttinghim/code/07-debugging:
-  total used in directory 1.5M available 332.9 GiB
-  drwxr-xr-x 1051 desttinghim desttinghim  36K Feb  2 20:33 node_modules
-  drwxr-xr-x    2 desttinghim desttinghim 4.0K Mar 24  2021 public
-  drwxr-xr-x    3 desttinghim desttinghim 4.0K Mar 24  2021 src
-  -rw-r--r--    1 desttinghim desttinghim  758 Mar 24  2021 package.json
-  -rw-r--r--    1 desttinghim desttinghim 1.4M Feb  2 20:32 package-lock.json
